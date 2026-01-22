@@ -1,9 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import useMeasure from "react-use-measure";
 
 export function Hero() {
   const targetRef = useRef<HTMLDivElement>(null);
@@ -39,7 +38,7 @@ export function Hero() {
         </motion.p>
 
         <MagneticButton>
-          <span className="flex items-center gap-2 text-white">
+          <span className="flex items-center gap-2">
             Explorar Colección <ArrowRight className="w-4 h-4" />
           </span>
         </MagneticButton>
