@@ -29,17 +29,19 @@ export function BottomNav() {
         
         {/* Home */}
         <Link href="/" onClick={() => setActiveTab("/")} className="relative p-2">
-           <Home strokeWidth={activeTab === "/" ? 2.5 : 2} className={activeTab === "/" ? "text-stone-900" : "text-stone-400"} size={24} />
+           <Home strokeWidth={activeTab === "/" ? 2.5 : 2} className={activeTab === "/" ? "text-primary" : "text-muted-foreground"} size={24} />
+           {activeTab === "/" && <motion.div layoutId="nav-dot" className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />}
         </Link>
 
         {/* Explore */}
         <Link href="/explore" onClick={() => setActiveTab("/explore")} className="relative p-2">
-           <Search strokeWidth={activeTab === "/explore" ? 2.5 : 2} className={activeTab === "/explore" ? "text-stone-900" : "text-stone-400"} size={24} />
+           <Search strokeWidth={activeTab === "/explore" ? 2.5 : 2} className={activeTab === "/explore" ? "text-primary" : "text-muted-foreground"} size={24} />
+           {activeTab === "/explore" && <motion.div layoutId="nav-dot" className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />}
         </Link>
 
         {/* Cart Drawer Trigger - Center & Elevated */}
         <div className="-mt-8">
-            <div className="bg-stone-900 rounded-full shadow-lg shadow-stone-900/20 text-white">
+            <div className="bg-primary rounded-full shadow-lg shadow-primary/30 text-primary-foreground">
                 <CartDrawer>
                     <button className="p-4 rounded-full flex items-center justify-center">
                         <ShoppingBag size={24} strokeWidth={2} />
@@ -50,7 +52,8 @@ export function BottomNav() {
 
         {/* Profile */}
         <Link href="/profile" onClick={() => setActiveTab("/profile")} className="relative p-2">
-           <User strokeWidth={activeTab === "/profile" ? 2.5 : 2} className={activeTab === "/profile" ? "text-stone-900" : "text-stone-400"} size={24} />
+           <User strokeWidth={activeTab === "/profile" ? 2.5 : 2} className={activeTab === "/profile" ? "text-primary" : "text-muted-foreground"} size={24} />
+           {activeTab === "/profile" && <motion.div layoutId="nav-dot" className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />}
         </Link>
 
       </div>

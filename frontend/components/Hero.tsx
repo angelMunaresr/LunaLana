@@ -16,29 +16,30 @@ export function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   return (
-    <section ref={targetRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-[#F5F5F7]">
+    <section ref={targetRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-background">
       {/* Parallax Background */}
       <motion.div 
         style={{ y, opacity }}
         className="absolute inset-0 z-0"
       >
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1615486511484-92e172cc4fe0?q=80&w=2069&auto=format&fit=crop')] bg-cover bg-center opacity-10" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-secondary/10" />
       </motion.div>
 
       <div className="container relative z-10 px-4 text-center">
-        <StaggeredText text="CrochetHub" className="font-serif text-6xl md:text-9xl text-stone-800 mb-6 tracking-tight" />
+        <StaggeredText text="CrochetHub" className="font-serif text-6xl md:text-9xl text-foreground mb-6 tracking-tight" />
         
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.8 }}
-          className="text-xl md:text-2xl text-stone-600 max-w-2xl mx-auto mb-12 font-light"
+          className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 font-light"
         >
           Patrones de tejido con alma. Diseño moderno, técnica ancestral.
         </motion.p>
 
         <MagneticButton>
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-2 text-white">
             Explorar Colección <ArrowRight className="w-4 h-4" />
           </span>
         </MagneticButton>

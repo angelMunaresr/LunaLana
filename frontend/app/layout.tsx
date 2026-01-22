@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { BottomNav } from "@/components/BottomNav";
 import { Header } from "@/components/Header";
+import { CustomCursor } from "@/components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif" });
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={cn("min-h-screen bg-background font-sans antialiased selection:bg-primary selection:text-white pb-24 md:pb-0", inter.variable, playfair.variable)}>
+        <CustomCursor />
         <Header />
         <SmoothScroll>
           {children}
