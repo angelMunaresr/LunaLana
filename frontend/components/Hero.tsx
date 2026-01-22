@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 export function Hero() {
@@ -50,7 +50,7 @@ export function Hero() {
 function StaggeredText({ text, className }: { text: string; className?: string }) {
   const letters = Array.from(text);
 
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
       opacity: 1,
@@ -58,7 +58,7 @@ function StaggeredText({ text, className }: { text: string; className?: string }
     }),
   };
 
-  const child = {
+  const child: Variants = {
     visible: {
       opacity: 1,
       y: 0,
