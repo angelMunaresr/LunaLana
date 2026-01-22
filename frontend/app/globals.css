@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Artisanal Luxury Palette */
+    --background: 30 10% 97%; /* Cream #F5F5F7 */
+    --foreground: 225 19% 22%; /* Charcoal #2D3142 */
+    
+    --card: 0 0% 100%;
+    --card-foreground: 225 19% 22%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 225 19% 22%;
+    
+    --primary: 13 70% 63%; /* Soft Terracotta #E07A5F */
+    --primary-foreground: 30 10% 97%;
+    
+    --secondary: 154 24% 60%; /* Muted Sage #81B29A */
+    --secondary-foreground: 30 10% 97%;
+    
+    --muted: 30 10% 92%;
+    --muted-foreground: 225 10% 45%;
+    
+    --accent: 30 15% 90%;
+    --accent-foreground: 225 19% 22%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+
+    --border: 30 10% 85%;
+    --input: 30 10% 85%;
+    --ring: 13 70% 63%;
+    
+    --radius: 0.75rem; /* More organic/softer radius */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Smooth text rendering */
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Custom Cursor Styles */
+.cursor-dot,
+.cursor-outline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 9999;
+  pointer-events: none;
+}
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background-color: hsl(var(--foreground));
+}
+.cursor-outline {
+  width: 40px;
+  height: 40px;
+  border: 1px solid hsl(var(--foreground));
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
