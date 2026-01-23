@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export function Hero() {
   const targetRef = useRef<HTMLDivElement>(null);
@@ -63,19 +64,21 @@ export function Hero() {
           Patrones de tejido con alma. Diseño moderno, técnica ancestral.
         </motion.p>
 
-        <MagneticButton>
-          <span className="relative flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full overflow-hidden group">
-            <span className="relative z-10 font-bold tracking-wide">Explorar Colección</span>
-            <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
-            
-            {/* Shimmer Effect */}
-            <motion.div 
-                className="absolute inset-0 -translate-x-full group-hover:translate-x-full z-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                animate={{ translateX: ["-100%", "100%"] }}
-                transition={{ repeat: Infinity, duration: 2, repeatDelay: 3, ease: "linear" }}
-            />
-          </span>
-        </MagneticButton>
+        <Link href="/explore">
+          <MagneticButton>
+            <span className="relative flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full overflow-hidden group">
+              <span className="relative z-10 font-bold tracking-wide">Explorar Colección</span>
+              <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+              
+              {/* Shimmer Effect */}
+              <motion.div 
+                  className="absolute inset-0 -translate-x-full group-hover:translate-x-full z-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{ translateX: ["-100%", "100%"] }}
+                  transition={{ repeat: Infinity, duration: 2, repeatDelay: 3, ease: "linear" }}
+              />
+            </span>
+          </MagneticButton>
+        </Link>
       </div>
     </section>
   );
@@ -130,10 +133,10 @@ function StaggeredText({ text, className }: { text: string; className?: string }
 }
 
 function MagneticButton({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouse = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current!.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);
@@ -148,16 +151,15 @@ function MagneticButton({ children }: { children: React.ReactNode }) {
   const { x, y } = position;
 
   return (
-    <motion.button
+    <motion.div
       ref={ref}
       animate={{ x, y }}
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
-      className="relative px-8 py-4 rounded-full border border-stone-800 text-stone-800 uppercase tracking-widest text-sm font-medium overflow-hidden group hover:text-white transition-colors duration-300"
+      className="relative inline-block"
     >
-      <span className="relative z-10">{children}</span>
-      <div className="absolute inset-0 bg-stone-800 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
-    </motion.button>
+      {children}
+    </motion.div>
   );
 }
