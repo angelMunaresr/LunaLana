@@ -4,32 +4,48 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowLeft, Star, Clock, Ruler, Info } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { CartDrawer } from "@/components/CartDrawer";
+import { getProductById, getRelatedProducts } from "@/lib/data";
 
 export default function ProductPage({ params }: { params: { id: string } }) {
   const [isAdding, setIsAdding] = useState(false);
+  
+  const product = getProductById(params.id);
+  const relatedProducts = product ? getRelatedProducts(product.id, product.category) : [];
 
   const handleAddToCart = () => {
     setIsAdding(true);
     setTimeout(() => setIsAdding(false), 1000);
   };
 
+  if (!product) {
+    return (
+        <div className="min-h-screen flex items-center justify-center">
+            <div className="text-center">
+                <h1 className="text-2xl font-serif mb-4">Producto no encontrado</h1>
+                <Link href="/explore" className="text-primary hover:underline">Volver a explorar</Link>
+            </div>
+        </div>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-background">
       {/* Mobile Header */}
-      <div className="fixed top-0 left-0 right-0 z-30 p-4 flex justify-between items-center md:hidden bg-gradient-to-b from-black/20 to-transparent pointer-events-none">
-        <Link href="/" className="bg-background/90 backdrop-blur shadow-sm p-2 rounded-full text-foreground pointer-events-auto">
+      <div className="fixed top-0 left-0 right-0 z-30 p-4 flex justify-between items-center md:hidden pointer-events-none">
+        <Link href="/explore" className="bg-white/80 backdrop-blur shadow-sm p-2 rounded-full text-foreground pointer-events-auto">
           <ArrowLeft size={20} />
         </Link>
       </div>
 
       <div className="md:grid md:grid-cols-2">
         {/* Left Column: Gallery */}
-        <div className="relative h-[60vh] md:h-screen bg-muted">
+        <div className="relative h-[60vh] md:h-screen bg-stone-100">
           {/* Mobile Swiper */}
           <div className="md:hidden h-full">
              <Swiper
@@ -37,9 +53,15 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 pagination={{ clickable: true, dynamicBullets: true }}
                 className="h-full w-full"
              >
-                {[1, 2, 3].map((i) => (
-                    <SwiperSlide key={i} className="bg-muted flex items-center justify-center">
-                        <span className="text-secondary/20 font-serif text-6xl opacity-30">{i}</span>
+                {product.images.map((img, i) => (
+                    <SwiperSlide key={i} className="relative bg-stone-100">
+                        <Image 
+                            src={img}
+                            alt={`${product.title} - view ${i + 1}`}
+                            fill
+                            className="object-cover"
+                            priority={i === 0}
+                        />
                     </SwiperSlide>
                 ))}
              </Swiper>
@@ -47,9 +69,15 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
           {/* Desktop Sticky Scroll Gallery */}
           <div className="hidden md:block h-full overflow-y-auto no-scrollbar snap-y snap-mandatory">
-            {[1, 2, 3].map((i) => (
-               <div key={i} className="h-screen w-full bg-muted border-b border-background flex items-center justify-center snap-start">
-                   <span className="text-secondary/20 font-serif text-8xl opacity-30">{i}</span>
+            {product.images.map((img, i) => (
+               <div key={i} className="h-screen w-full relative bg-stone-100 border-b border-white/20 snap-start">
+                   <Image 
+                        src={img}
+                        alt={`${product.title} - view ${i + 1}`}
+                        fill
+                        className="object-cover"
+                        priority={i === 0}
+                    />
                </div>
             ))}
           </div>
@@ -60,26 +88,26 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           {/* Breadcrumbs (Desktop) */}
           <div className="hidden md:flex gap-2 text-sm text-muted-foreground mb-8">
             <Link href="/" className="hover:text-foreground">Inicio</Link> / 
-            <span>Patrones</span> / 
-            <span className="text-foreground">Amigurumi Osito {params.id}</span>
+            <Link href="/explore" className="hover:text-foreground">Patrones</Link> / 
+            <span className="text-foreground">{product.title}</span>
           </div>
 
           <div className="mb-2 flex items-center gap-2">
             <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-              Nuevo
+              {product.type}
             </span>
             <div className="flex items-center gap-1 text-accent text-sm">
                 <Star fill="currentColor" size={14} />
-                <span className="text-muted-foreground font-medium ml-1">4.9 (120 reviews)</span>
+                <span className="text-muted-foreground font-medium ml-1">5.0 (Review)</span>
             </div>
           </div>
 
-          <h1 className="font-serif text-4xl md:text-5xl text-foreground mb-4 leading-tight">
-            Amigurumi Osito {params.id}
+          <h1 className="font-serif text-3xl md:text-5xl text-foreground mb-4 leading-tight">
+            {product.title}
           </h1>
 
           <p className="text-2xl font-medium text-secondary mb-8">
-            $5.00 <span className="text-sm font-normal text-muted-foreground ml-2">PDF Digital</span>
+            {product.price} <span className="text-sm font-normal text-muted-foreground ml-2">PDF Digital</span>
           </p>
 
           {/* Key Specs */}
@@ -87,26 +115,23 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <div className="text-center border-r border-border last:border-0">
                 <div className="flex justify-center mb-2 text-muted-foreground"><Clock size={20} /></div>
                 <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Tiempo</p>
-                <p className="font-medium text-foreground">4-6 Horas</p>
+                <p className="font-medium text-foreground">{product.time}</p>
             </div>
             <div className="text-center border-r border-border last:border-0">
                 <div className="flex justify-center mb-2 text-muted-foreground"><Ruler size={20} /></div>
                 <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Gancho</p>
-                <p className="font-medium text-foreground">3.5 mm</p>
+                <p className="font-medium text-foreground">{product.hook}</p>
             </div>
             <div className="text-center">
                 <div className="flex justify-center mb-2 text-muted-foreground"><Info size={20} /></div>
                 <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Nivel</p>
-                <p className="font-medium text-foreground">Intermedio</p>
+                <p className="font-medium text-foreground">{product.difficulty}</p>
             </div>
           </div>
 
           {/* Description */}
           <div className="space-y-6 text-muted-foreground leading-relaxed mb-12">
-            <p>
-                Este patrón digital te guiará paso a paso para crear tu propio Osito Amigurumi. 
-                Diseñado con amor y atención al detalle, este proyecto es perfecto para tardes acogedoras.
-            </p>
+            <p>{product.description}</p>
             <p>
                 Incluye instrucciones detalladas, fotos de alta calidad para cada paso y consejos 
                 para lograr un acabado profesional. Al comprarlo, recibirás acceso inmediato al archivo PDF.
@@ -114,23 +139,22 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             
             <h3 className="font-serif text-xl text-foreground mt-8 mb-4">Materiales Necesarios</h3>
             <ul className="list-disc list-inside space-y-2 marker:text-primary">
-                <li>Hilo de algodón 100% (Grosor medio)</li>
-                <li>Gancho de crochet de 3.5mm</li>
-                <li>Ojos de seguridad de 10mm</li>
-                <li>Relleno sintético</li>
+                <li>Hilo recomendado para gancho de {product.hook}</li>
+                <li>Gancho de crochet de {product.hook}</li>
                 <li>Aguja lanera y tijeras</li>
+                <li>Marcadores de puntos</li>
             </ul>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-4 mb-8">
+          <div className="flex gap-4 mb-12">
              <CartDrawer>
                  <button 
                     onClick={handleAddToCart}
                     className="w-full bg-primary text-primary-foreground py-4 px-8 rounded-full font-bold hover:bg-primary/90 transition-colors disabled:opacity-80 disabled:cursor-not-allowed flex-1 shadow-lg shadow-primary/20"
                     disabled={isAdding}
                  >
-                    {isAdding ? "Agregando..." : "Agregar al Carrito - $5.00"}
+                    {isAdding ? "Agregando..." : `Agregar al Carrito - ${product.price}`}
                  </button>
              </CartDrawer>
              <button className="p-4 border border-border rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-primary">
@@ -139,7 +163,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           </div>
           
           {/* Accordion / Additional Info */}
-          <div className="border-t border-border pt-6">
+          <div className="border-t border-border pt-6 mb-16">
              <details className="group cursor-pointer">
                 <summary className="flex justify-between items-center font-medium text-foreground list-none">
                     <span>Entrega Digital Instantánea</span>
@@ -152,6 +176,30 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 </div>
              </details>
           </div>
+
+          {/* Related Products */}
+          {relatedProducts.length > 0 && (
+              <div>
+                  <h3 className="font-serif text-2xl text-foreground mb-6">También te podría gustar</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                      {relatedProducts.map((rp) => (
+                          <Link key={rp.id} href={`/products/${rp.id}`} className="group">
+                              <div className="relative aspect-[4/5] bg-stone-100 rounded-xl overflow-hidden mb-3">
+                                  <Image 
+                                    src={rp.images[0]} 
+                                    alt={rp.title} 
+                                    fill 
+                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                  />
+                              </div>
+                              <h4 className="font-medium text-foreground text-sm group-hover:text-primary transition-colors">{rp.title}</h4>
+                              <p className="text-sm text-secondary font-bold">{rp.price}</p>
+                          </Link>
+                      ))}
+                  </div>
+              </div>
+          )}
+
         </div>
       </div>
       
@@ -163,7 +211,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       >
          <div className="flex-1">
             <p className="text-xs text-muted-foreground">Total</p>
-            <p className="font-serif text-xl text-foreground font-bold">$5.00</p>
+            <p className="font-serif text-xl text-foreground font-bold">{product.price}</p>
          </div>
          <CartDrawer>
             <button 
@@ -177,5 +225,3 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     </main>
   );
 }
-
-

@@ -32,7 +32,7 @@ const STEPS = [
 
 export function RitualTejido() {
   return (
-    <section className="w-full py-16 md:py-24 bg-white">
+    <section className="w-full py-16 md:py-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <span className="text-xs font-bold tracking-[0.2em] text-muted-foreground uppercase mb-2 block">

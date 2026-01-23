@@ -9,7 +9,7 @@ export function PersonalBranding() {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   return (
-    <section className="w-full py-20 bg-[#FDFBF7] relative overflow-hidden">
+    <section className="w-full py-20 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />

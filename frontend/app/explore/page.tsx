@@ -6,58 +6,7 @@ import Link from "next/link";
 import { Search, SlidersHorizontal, ShoppingBag } from "lucide-react";
 import { useState, useMemo } from "react";
 import { CartDrawer } from "@/components/CartDrawer";
-
-// Mock data extended
-const PRODUCTS = [
-  {
-    id: 1,
-    title: "Cardigan 'Luna' Oversized",
-    price: "$25.00",
-    image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=1000&auto=format&fit=crop",
-    category: "Ropa",
-    type: "Patrón PDF"
-  },
-  {
-    id: 2,
-    title: "Top 'Summer Breeze'",
-    price: "$12.00",
-    image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=800&auto=format&fit=crop",
-    category: "Ropa",
-    type: "Patrón PDF"
-  },
-  {
-    id: 3,
-    title: "Bolso 'Market' Eco",
-    price: "$8.00",
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop",
-    category: "Accesorios",
-    type: "Patrón PDF"
-  },
-  {
-    id: 4,
-    title: "Bufanda 'Cozy' Chunky",
-    price: "$15.00",
-    image: "https://images.unsplash.com/photo-1605763240004-7e93b172d754?q=80&w=800&auto=format&fit=crop",
-    category: "Accesorios",
-    type: "Patrón PDF"
-  },
-  {
-    id: 5,
-    title: "Gorro 'Winter' PomPom",
-    price: "$10.00",
-    image: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?q=80&w=800&auto=format&fit=crop",
-    category: "Accesorios",
-    type: "Patrón PDF"
-  },
-  {
-    id: 6,
-    title: "Manta 'Heirloom'",
-    price: "$30.00",
-    image: "https://images.unsplash.com/photo-1513373319109-eb154073eb0b?q=80&w=800&auto=format&fit=crop",
-    category: "Hogar",
-    type: "Patrón PDF"
-  },
-];
+import { PRODUCTS } from "@/lib/data";
 
 const CATEGORIES = ["Todos", "Ropa", "Accesorios", "Hogar"];
 
@@ -153,7 +102,7 @@ function ProductCard({ product }: { product: any }) {
       <div className="relative overflow-hidden rounded-2xl aspect-[4/5] mb-4 bg-stone-100">
          <Link href={`/products/${product.id}`} className="block w-full h-full">
             <Image 
-                src={product.image} 
+                src={product.images[0]} 
                 alt={product.title}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
