@@ -52,27 +52,41 @@ export function Hero() {
       </motion.div>
 
 
-      <div className="container relative z-10 px-4 text-center">
-        <StaggeredText text="CrochetHub" className="font-serif text-6xl md:text-9xl text-foreground mb-6 tracking-tight" />
+      <div className="container relative z-10 px-4 text-center flex flex-col items-center justify-center h-full">
+        <motion.div
+           initial={{ opacity: 0, y: 30 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.8, ease: "easeOut" }}
+           className="mb-6"
+        >
+            <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-foreground tracking-tight leading-tight">
+              Luna Lana <span className="text-primary italic">Handmade</span>
+            </h1>
+            <h2 className="font-serif text-2xl md:text-4xl text-foreground/80 mt-2 font-light">
+              Patrones de tejido con alma
+            </h2>
+        </motion.div>
         
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
-          className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 font-light"
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Patrones de tejido con alma. Diseño moderno, técnica ancestral.
+          Diseño moderno, técnica ancestral. Crea tus propios amigurumis inspirados en tus artistas favoritos.
         </motion.p>
 
         <Link href="/explore">
           <MagneticButton>
-            <span className="relative flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full overflow-hidden group">
-              <span className="relative z-10 font-bold tracking-wide">Explorar Colección</span>
-              <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+            <span className="relative flex items-center gap-3 px-8 py-4 bg-white/30 backdrop-blur-md border border-white/60 text-foreground rounded-full overflow-hidden group hover:bg-white/50 transition-all shadow-lg hover:shadow-xl hover:scale-105">
+              <span className="relative z-10 font-bold tracking-wide">Ver Patrones Populares</span>
+              <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center group-hover:rotate-45 transition-transform">
+                  <ArrowRight className="w-4 h-4" />
+              </span>
               
               {/* Shimmer Effect */}
               <motion.div 
-                  className="absolute inset-0 -translate-x-full group-hover:translate-x-full z-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  className="absolute inset-0 -translate-x-full group-hover:translate-x-full z-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
                   animate={{ translateX: ["-100%", "100%"] }}
                   transition={{ repeat: Infinity, duration: 2, repeatDelay: 3, ease: "linear" }}
               />

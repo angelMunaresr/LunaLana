@@ -14,11 +14,11 @@
     --popover: 0 0% 100%;
     --popover-foreground: 260 20% 20%;
     
-    --primary: 340 85% 60%; /* Vibrant Raspberry Pink */
-    --primary-foreground: 40 40% 98%;
+    --primary: 336 88% 82%; /* Rosa Pastel (#f9a8d4) */
+    --primary-foreground: 260 20% 20%; /* Dark text on light pink */
     
-    --secondary: 175 70% 40%; /* Fresh Tropical Teal */
-    --secondary-foreground: 40 40% 98%;
+    --secondary: 175 40% 65%; /* Soft Teal/Turquesa suave */
+    --secondary-foreground: 260 20% 20%;
     
     --muted: 40 30% 94%;
     --muted-foreground: 260 10% 50%;

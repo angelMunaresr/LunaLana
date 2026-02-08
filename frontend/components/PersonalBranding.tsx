@@ -18,8 +18,8 @@ export function PersonalBranding() {
         
         {/* Organic Shape Image Container */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="relative w-64 h-64 md:w-96 md:h-96 flex-shrink-0"
@@ -45,27 +45,29 @@ export function PersonalBranding() {
         {/* Text Content */}
         <div className="flex-1 text-center md:text-left">
           <motion.h2 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="font-serif text-3xl md:text-5xl text-foreground mb-6"
           >
-            Hola, soy <span className="text-secondary italic">Ana</span>
+            Detrás de cada <span className="text-secondary italic">punto</span>
           </motion.h2>
           
           <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="space-y-4 text-muted-foreground text-lg leading-relaxed mb-8"
           >
             <p>
-              Creo patrones de crochet que fusionan la moda contemporánea con la calidez de lo hecho a mano. 
-              Mi misión es inspirarte a crear prendas únicas que cuenten tu propia historia.
+              ¡Hola! Soy Ana, la mente creativa detrás de Luna Lana Handmade.
             </p>
             <p>
-              Cada diseño nace de una tarde de café y ovillos desordenados.
+              Tejer no es solo unir hilos; es una forma de meditación, arte y expresión. Mi pasión es crear diseños modernos con un toque kawaii y artesanal, pensados para quienes buscan poner un pedacito de su alma en cada creación.
+            </p>
+            <p>
+              Desde amigurumis adorables hasta prendas únicas, cada patrón está diseñado para guiarte paso a paso en este viaje creativo.
             </p>
           </motion.div>
 
